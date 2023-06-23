@@ -56,8 +56,8 @@ router.get('/users', async (req, res) => {
 router.post('/user-data', async (req, res) => {
     const age = Math.floor((new Date() - new Date(req.body.dob).getTime()) / 3.15576e+10);
     const email = req.body.email;
-    const users = User.findOne({email:email});
-    if (users) {
+    const users = await User.findOne({email:email});
+    if (users.length > 0) {
         return res.status(401).json({ message: "User already exists" });
     } 
     const user = new User({
